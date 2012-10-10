@@ -1,8 +1,9 @@
 package board;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Map;
-import java.util.TreeSet;
+import java.util.Set;
 
 
 public class IntBoard {
@@ -10,12 +11,14 @@ public class IntBoard {
 	private static int COLS =4;
 	private static int GRID_PIECES;
 	private Map<Integer, LinkedList<Integer>> adjMtx;
+	private Set<Integer> targets;
 	
 	public IntBoard() {
 		super();
 		// TODO Auto-generated constructor stub
 		GRID_PIECES = ROWS*COLS;
 		adjMtx = new HashMap<Integer, LinkedList<Integer>>();
+		targets = new HashSet<Integer>();
 	}
 	public void calcAdjacencies(){
 		//for loops
@@ -24,15 +27,24 @@ public class IntBoard {
 		}
 	}
 	public void calcTargets(int startLoc, int steps){
-		//TODO 
+		targets.clear();
+		calcTargetsRecursion(startLoc, steps);
 	}
-	public TreeSet getTargets(){
-		//TODO
-		TreeSet targets = new TreeSet();
+	private void calcTargetsRecursion(int startLoc, int steps) {
+		if(steps == 0) {
+			targets.add(startLoc);
+			return;
+		}
+		LinkedList<Integer> start = adjMtx.get(startLoc);
+		for(int i = 0; i < start.size(); i++) {
+			calcTargetsRecursion(start.get(i), steps-1);
+		}
+	}
+	public Set getTargets(){
 		return targets;
 	}
-	public LinkedList getAdjList(int cell){
-		LinkedList adjList = new LinkedList();
+	public LinkedList<Integer> getAdjList(int cell){
+		LinkedList<Integer> adjList = new LinkedList<Integer>();
 		if(cell %COLS ==0){
 			//left edge
 			if(cell == 0){

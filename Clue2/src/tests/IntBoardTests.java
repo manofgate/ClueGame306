@@ -1,6 +1,7 @@
 package tests;
 
 import java.util.LinkedList;
+import java.util.Set;
 import java.util.TreeSet;
 
 import org.junit.Assert;
@@ -93,7 +94,7 @@ public class IntBoardTests {
 	@Test
 	public void testPath1() {
 		board.calcTargets(0, 3);
-		TreeSet targets= board.getTargets();
+		Set targets= board.getTargets();
 		Assert.assertEquals(6, targets.size());
 		Assert.assertTrue(targets.contains(12));
 		Assert.assertTrue(targets.contains(9));
@@ -106,7 +107,7 @@ public class IntBoardTests {
 	@Test
 	public void testPath2() {
 		board.calcTargets(15, 3);
-		TreeSet targets= board.getTargets();
+		Set<Integer> targets= board.getTargets();
 		Assert.assertEquals(6, targets.size());
 		Assert.assertTrue(targets.contains(12));
 		Assert.assertTrue(targets.contains(9));
@@ -119,7 +120,7 @@ public class IntBoardTests {
 	@Test
 	public void testPath3() {
 		board.calcTargets(3, 3);
-		TreeSet targets= board.getTargets();
+		Set<Integer> targets= board.getTargets();
 		Assert.assertEquals(6, targets.size());
 		Assert.assertTrue(targets.contains(0));
 		Assert.assertTrue(targets.contains(5));
@@ -132,7 +133,7 @@ public class IntBoardTests {
 	@Test
 	public void testPath4() {
 		board.calcTargets(12, 3);
-		TreeSet targets= board.getTargets();
+		Set targets= board.getTargets();
 		Assert.assertEquals(6, targets.size());
 		Assert.assertTrue(targets.contains(0));
 		Assert.assertTrue(targets.contains(5));
@@ -145,9 +146,10 @@ public class IntBoardTests {
 	@Test
 	public void testPath5() {
 		board.calcTargets(5, 2);
-		TreeSet targets= board.getTargets();
-		Assert.assertEquals(6, targets.size());
+		Set targets= board.getTargets();
+		Assert.assertEquals(7, targets.size());
 		Assert.assertTrue(targets.contains(0));
+		Assert.assertTrue(targets.contains(2));
 		Assert.assertTrue(targets.contains(10));
 		Assert.assertTrue(targets.contains(8));
 		Assert.assertTrue(targets.contains(13));
@@ -158,7 +160,7 @@ public class IntBoardTests {
 	@Test
 	public void testPath6() {
 		board.calcTargets(7, 1);
-		TreeSet targets= board.getTargets();
+		Set targets= board.getTargets();
 		Assert.assertEquals(3, targets.size());
 		Assert.assertTrue(targets.contains(3));
 		Assert.assertTrue(targets.contains(6));
