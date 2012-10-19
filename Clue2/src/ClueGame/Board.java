@@ -1,9 +1,9 @@
 package ClueGame;
 
 import java.io.FileReader;
-import java.io.Reader;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
@@ -55,7 +55,7 @@ public class Board {
 					if(row<=1)
 						col++;
 					if(str.equals("W")){
-						walkwayCell c = new walkwayCell();
+						WalkwayCell c = new WalkwayCell();
 						cells.add(c);
 					}
 					else{
@@ -113,5 +113,8 @@ public class Board {
 	public void setNumColumns(int numColumns) {
 		this.numColumns = numColumns;
 	}
-	
+	//0 indexed
+	public LinkedList<Integer> getAdjList(int row, int col) { return getAdjList(calcIndex(row, col)); }
+	public LinkedList<Integer> getAdjList(int cell) { return null; }
+	public Set<Integer> calcTargets(int location, int distance) { return null; }
 }

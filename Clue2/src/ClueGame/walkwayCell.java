@@ -1,8 +1,8 @@
 package ClueGame;
 
-public class walkwayCell extends BoardCell {
+public class WalkwayCell extends BoardCell {
 	
-	public walkwayCell() {
+	public WalkwayCell() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
