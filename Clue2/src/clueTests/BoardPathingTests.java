@@ -9,6 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import ClueGame.Board;
+import ClueGame.BoardCell;
 
 public class BoardPathingTests {
 
@@ -87,75 +88,87 @@ public class BoardPathingTests {
 	
 	@Test
 	public void testWalkwayPath1() {
-		Set<Integer> targets = board.calcTargets(toLocation(5, 20), 2);
-		Assert.assertEquals(targets.contains(toLocation(5, 20)), true);
-		Assert.assertEquals(targets.contains(toLocation(5, 18)), true);
-		Assert.assertEquals(targets.contains(toLocation(4, 19)), true);
+		board.calcTargets(toLocation(5, 20), 2);
+		Set<BoardCell> targets = board.getTargets();
+		Assert.assertEquals(targets.contains(board.getCells().get(toLocation(5, 20))), true);
+		Assert.assertEquals(targets.contains(board.getCells().get(toLocation(5, 18))), true);
+		Assert.assertEquals(targets.contains(board.getCells().get(toLocation(4, 19))), true);
 	}
 	
 	@Test
 	public void testWalkwayPath2() {
-		Set<Integer> targets = board.calcTargets(toLocation(11, 20), 2);
-		Assert.assertEquals(targets.contains(toLocation(11, 20)), true);
-		Assert.assertEquals(targets.contains(toLocation(11, 18)), true);
+		board.calcTargets(toLocation(11, 20), 2);
+		Set<BoardCell> targets = board.getTargets();
+		
+		Assert.assertEquals(targets.contains(board.getCells().get(toLocation(11, 20))), true);
+		Assert.assertEquals(targets.contains(board.getCells().get(toLocation(11, 18))), true);
 	}
 	
 	@Test
 	public void testWalkwayPath3() {
-		Set<Integer> targets = board.calcTargets(toLocation(11, 13), 2);
-		Assert.assertEquals(targets.contains(toLocation(11, 11)), true);
-		Assert.assertEquals(targets.contains(toLocation(11, 15)), true);
-		Assert.assertEquals(targets.contains(toLocation(10, 12)), true);
-		Assert.assertEquals(targets.contains(toLocation(12, 14)), true);
-		Assert.assertEquals(targets.contains(toLocation(14, 13)), true);
-		Assert.assertEquals(targets.contains(toLocation(11, 13)), true);
+		board.calcTargets(toLocation(11, 13), 2);
+		Set<BoardCell> targets = board.getTargets();
+		Assert.assertEquals(targets.contains(board.getCells().get(toLocation(11, 11))), true);
+		Assert.assertEquals(targets.contains(board.getCells().get(toLocation(11, 15))), true);
+		Assert.assertEquals(targets.contains(board.getCells().get(toLocation(10, 12))), true);
+		Assert.assertEquals(targets.contains(board.getCells().get(toLocation(12, 14))), true);
+		Assert.assertEquals(targets.contains(board.getCells().get(toLocation(13, 13))), true);
+		Assert.assertEquals(targets.contains(board.getCells().get(toLocation(11, 13))), true);
 	}
 	
 	@Test
 	public void testWalkwayPath4() {
-		Set<Integer> targets = board.calcTargets(toLocation(5, 15), 2);
-		Assert.assertEquals(targets.contains(toLocation(5, 13)), true);
-		Assert.assertEquals(targets.contains(toLocation(5, 17)), true);
-		Assert.assertEquals(targets.contains(toLocation(4, 14)), true);
-		Assert.assertEquals(targets.contains(toLocation(4, 16)), true);
-		Assert.assertEquals(targets.contains(toLocation(5, 15)), true);
+		board.calcTargets(toLocation(5, 15), 2);
+		Set<BoardCell> targets = board.getTargets();
+		Assert.assertEquals(targets.contains(board.getCells().get(toLocation(5, 13))), true);
+		Assert.assertEquals(targets.contains(board.getCells().get(toLocation(5, 17))), true);
+		Assert.assertEquals(targets.contains(board.getCells().get(toLocation(4, 14))), true);
+		Assert.assertEquals(targets.contains(board.getCells().get(toLocation(4, 16))), true);
+		Assert.assertEquals(targets.contains(board.getCells().get(toLocation(5, 15))), true);
 	}
 	
 	@Test
 	public void testDoorwayPath1() {
-		Set<Integer> targets = board.calcTargets(toLocation(14, 8), 2);
-		Assert.assertEquals(targets.contains(toLocation(13, 7)), true);
-		Assert.assertEquals(targets.contains(toLocation(12, 8)), true);
-		Assert.assertEquals(targets.contains(toLocation(13, 9)), true);
-		Assert.assertEquals(targets.contains(toLocation(15, 9)), true);
-		Assert.assertEquals(targets.contains(toLocation(14, 8)), true);
+		board.calcTargets(toLocation(14, 8), 2);
+		Set<BoardCell> targets = board.getTargets();
+		System.out.println(board.getCells().get(toLocation(14,8)).isDoorway());
+		Assert.assertEquals(targets.contains(board.getCells().get(toLocation(13, 7))), true);
+		Assert.assertEquals(targets.contains(board.getCells().get(toLocation(12, 8))), true);
+		Assert.assertEquals(targets.contains(board.getCells().get(toLocation(13, 9))), true);
+		Assert.assertEquals(targets.contains(board.getCells().get(toLocation(15, 9))), true);
+		Assert.assertEquals(targets.contains(board.getCells().get(toLocation(14, 8))), true);
 	}
 	
 	@Test
 	public void testDoorwayPath2() {
-		Set<Integer> targets = board.calcTargets(toLocation(13, 14), 2);
-		Assert.assertEquals(targets.contains(toLocation(13, 15)), true);
-		Assert.assertEquals(targets.contains(toLocation(13, 13)), true);
-		Assert.assertEquals(targets.contains(toLocation(12, 14)), true);
-		Assert.assertEquals(targets.contains(toLocation(15, 14)), true);
+		board.calcTargets(toLocation(13, 14), 1);
+		Set<BoardCell> targets = board.getTargets();
+		
+		Assert.assertEquals(targets.contains(board.getCells().get(toLocation(13, 15))), true);
+		Assert.assertEquals(targets.contains(board.getCells().get(toLocation(13, 13))), true);
+		Assert.assertEquals(targets.contains(board.getCells().get(toLocation(12, 14))), true);
+		Assert.assertEquals(targets.contains(board.getCells().get(toLocation(14, 14))), true);
 	}
 	
 	@Test
 	public void testLeavingPath1() {
-		Set<Integer> targets = board.calcTargets(toLocation(6, 2), 2);
-		Assert.assertEquals(targets.contains(toLocation(5, 1)), true);
-		Assert.assertEquals(targets.contains(toLocation(4, 2)), true);
-		Assert.assertEquals(targets.contains(toLocation(5, 3)), true);
-		Assert.assertEquals(targets.contains(toLocation(6, 2)), true);
+		board.calcTargets(toLocation(6, 2), 2);
+		Set<BoardCell> targets = board.getTargets();
+		Assert.assertEquals(targets.contains(board.getCells().get(toLocation(5, 1))), true);
+		Assert.assertEquals(targets.contains(board.getCells().get(toLocation(4, 2))), true);
+		Assert.assertEquals(targets.contains(board.getCells().get(toLocation(5, 3))), true);
+		Assert.assertEquals(targets.contains(board.getCells().get(toLocation(6, 2))), true);
 	}
 	
 	@Test
 	public void testLeavingPath2() {
-		Set<Integer> targets = board.calcTargets(toLocation(10, 17), 2);
-		Assert.assertEquals(targets.contains(toLocation(11, 16)), true);
-		Assert.assertEquals(targets.contains(toLocation(11, 18)), true);
-		Assert.assertEquals(targets.contains(toLocation(10, 17)), true);
-		Assert.assertEquals(targets.contains(toLocation(12, 19)), true);
+		board.calcTargets(toLocation(10, 17), 2);
+		Set<BoardCell> targets = board.getTargets();
+		System.out.println("10,17 " +board.getCells().get(toLocation(10,17)).isRoom());
+		Assert.assertEquals(targets.contains(board.getCells().get(toLocation(11, 16))), true);
+		Assert.assertEquals(targets.contains(board.getCells().get(toLocation(11, 18))), true);
+		Assert.assertEquals(targets.contains(board.getCells().get(toLocation(10, 17))), true);
+		Assert.assertEquals(targets.contains(board.getCells().get(toLocation(12, 17))), true);
 	}
 	
 	public int toLocation(int row, int col) {

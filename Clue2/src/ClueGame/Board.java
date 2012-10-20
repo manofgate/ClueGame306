@@ -3,6 +3,7 @@ package ClueGame;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.Scanner;
@@ -67,10 +68,8 @@ public class Board {
 					setNumColumns(col);
 			}
 			setNumRows(row);
-			
-			System.out.println("col is " +col);
-			//System.out.println("Number of cells " + cells.size());
 			scan.close();
+			GRID_PIECES = numRows*numColumns;
 		}catch(Exception e){
 			e.getStackTrace();
 		}
@@ -82,7 +81,6 @@ public class Board {
 	public RoomCell getRoomCellAt(int row, int col){
 		RoomCell roomCell = new RoomCell();
 		roomCell = (RoomCell) getCells().get(calcIndex(row, col));
-		System.out.println(roomCell.getRoomInitial());
 		return roomCell;
 	}
 	public Board() {
@@ -115,6 +113,102 @@ public class Board {
 	}
 	//0 indexed
 	public LinkedList<Integer> getAdjList(int row, int col) { return getAdjList(calcIndex(row, col)); }
-	public LinkedList<Integer> getAdjList(int cell) { return null; }
-	public Set<Integer> calcTargets(int location, int distance) { return null; }
+	//public LinkedList<Integer> getAdjList(int cell) { return null; }
+	//public Set<Integer> calcTargets(int location, int distance) { return null; }
+	private static int GRID_PIECES;
+	private Map<Integer, LinkedList<Integer>> adjMtx =new HashMap<Integer, LinkedList<Integer>>();
+	private Set<BoardCell> targets = new HashSet<BoardCell>();
+	
+	/*public IntBoard() {
+		super();
+		// TODO Auto-generated constructor stub
+		GRID_PIECES = ROWS*COLS;
+		adjMtx = new HashMap<Integer, LinkedList<Integer>>();
+		targets = new HashSet<Integer>();
+	}
+	*/
+	public void calcAdjacencies(){
+		//for loops
+		for(int i = 0; i<GRID_PIECES; ++i){
+			adjMtx.put(i, getAdjList(i));
+		}
+	}
+	public void calcTargets(int startLoc, int steps){
+		targets.clear();
+		calcTargetsRecursion(startLoc, steps);
+	}
+	private void calcTargetsRecursion(int startLoc, int steps) {
+		if(steps == 0) {
+			targets.add(getCells().get(startLoc));
+			return;
+		}
+		LinkedList<Integer> start =  getAdjList(startLoc);
+		for(int i = 0; i < start.size(); i++) {
+			calcTargetsRecursion(start.get(i), steps-1);
+		}
+	}
+	public Set getTargets(){
+		return targets;
+	}
+	public LinkedList<Integer> getAdjList(int cell){
+		LinkedList<Integer> adjList = new LinkedList<Integer>();
+		if(cell %numColumns ==0){
+			//left edge
+			if(cell == 0){
+				//top
+				adjList.add(cell +1);
+				adjList.add(cell+numColumns);
+			}
+			else if(cell == GRID_PIECES - numColumns){
+				//bottom
+				adjList.add(cell +1);
+				adjList.add(cell-numColumns);
+			}
+			else {
+				// inbetween
+				adjList.add(cell+1);
+				adjList.add(cell+numColumns);
+				adjList.add(cell-numColumns);
+			}		
+		}
+		else if((cell+1)%numColumns == GRID_PIECES%numColumns){
+			//right edge
+			if(cell == numColumns -1){
+				//top
+				adjList.add(cell -1);
+				adjList.add(cell+numColumns);
+			}
+			else if(cell == GRID_PIECES - 1){
+				//bottom
+				adjList.add(cell -1);
+				adjList.add(cell-numColumns);
+			}
+			else {
+				// inbetween
+				adjList.add(cell-1);
+				adjList.add(cell+numColumns);
+				adjList.add(cell-numColumns);
+			}
+		}
+		else if(cell < numColumns){
+			//on top
+			adjList.add(cell+1);
+			adjList.add(cell -1);
+			adjList.add(cell+numColumns);
+		}
+		else if(cell >(GRID_PIECES - numColumns)){
+			//on bottom
+			adjList.add(cell+1);
+			adjList.add(cell-1);
+			adjList.add(cell-numColumns);
+		}
+		else{
+			//inbetween
+			adjList.add(cell+1);
+			adjList.add(cell-1);
+			adjList.add(cell+numColumns);
+			adjList.add(cell-numColumns);
+		}
+		return adjList;
+	}
 }

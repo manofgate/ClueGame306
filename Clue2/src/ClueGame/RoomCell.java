@@ -49,4 +49,5 @@ public class RoomCell extends BoardCell {
 	public char getRoomInitial() {
 		return roomInitial;
 	}
+	
 }
